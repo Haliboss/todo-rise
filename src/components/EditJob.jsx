@@ -1,29 +1,55 @@
 //import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 //import { useJobContext } from "../context/JobProvider";
 
-const EditJob = (e) => {
+const EditJob = ({ editItem }) => {
+  console.log(editItem);
+
+  const { id, name, priority } = editItem;
+
+  //const { getLocalJobs } = useJobContext();
+
+  const [modalPriority, setModalPriority] = useState(priority);
+
+  console.log(priority)
   //   e.preventDefault();
 
   //   const { jobs, setJobs } = useJobContext();
 
   //   console.log(e.target.value);
 
-  //   // useEffect(() => {
-  //   //   setTitle(newTitle);
-  //   //   setDescription(newDescription);
-  //   // }, [newTitle, newDescription]);
+  useEffect(() => {
+    setModalPriority(priority);
+  }, [priority]);
 
   //   // //! Update (PUT:Whole Update,PATCH :Partially Update)
-  //   const editJob = (id) => {
+  const editJob = (id) => {
+    const newList = JSON.parse(localStorage.getItem("jobs"));
+    console.log(newList);
+    // for (let i = 0; i < newList.lenght; i++) {
 
-  //   };
+    // }
+    const secondNewList = newList.map((job) => {
+      console.log(typeof id)
+      console.log(typeof job.id);
+      if (String(job.id) === String(id)) {
+        return { ...job, priority: modalPriority };
+      } else {
+        return job
+      }
+      
+    });
+    console.log(secondNewList);
+    localStorage.setItem("jobs", JSON.stringify(secondNewList));
+    setModalPriority('')    
+  };
 
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     editJob(id, { title, description });
-  //     setTitle("");
-  //     setDescription("");
-  //   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    editJob(id, name, priority);
+    //setTitle("");
+    //setDescription("");
+  };
 
   return (
     <div>
@@ -42,10 +68,10 @@ const EditJob = (e) => {
               />
             </div>
             <div className="modal-body">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="title" className="form-label">
-                    Title
+                    Name
                   </label>
                   <input
                     type="text"
@@ -53,18 +79,20 @@ const EditJob = (e) => {
                     id="title"
                     placeholder="Enter your title"
                     required
+                    value={name || ""}
+                    disabled
                   />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="desc" className="form-label">
-                    Description
+                    Priority
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="desc"
-                    placeholder="Enter your Description"
                     required
+                    value={modalPriority || ""}
+                    onChange={(e)=>setModalPriority(e.target.value)}
                   />
                 </div>
               </form>
@@ -81,6 +109,7 @@ const EditJob = (e) => {
                 type="button"
                 className="btn btn-primary"
                 data-bs-dismiss="modal"
+                onClick={handleSubmit}
               >
                 Save
               </button>

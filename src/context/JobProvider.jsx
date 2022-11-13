@@ -23,7 +23,8 @@ const JobProvider = ({ children }) => {
   
   useEffect(() => {
     const getLocalJobs = getLocalStorage();
-    getLocalJobs?.lenght || setLocalStorage(initialJobs);
+    console.log(getLocalJobs?.length)
+    getLocalJobs?.length || setLocalStorage(initialJobs);
     setJobs(getLocalStorage());
   }, []);
   console.log(jobs);

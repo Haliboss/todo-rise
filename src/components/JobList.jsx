@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { useJobContext } from "../context/JobProvider";
-import EditIcon from './EditJob'
+import EditJob from './EditJob'
 
 const Container = styled.div`
   //height: 100%;
@@ -80,6 +80,7 @@ const ListLine = styled.tr`
 
 const JobList = () => {
   const { jobs, setJobs, setLocalStorage } = useJobContext();
+  const [editItem, setEditItem] = useState("");
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [filterName, setFilterName] = useState("");
   const [filterPriority, setFilterPriority] = useState("");
@@ -159,7 +160,14 @@ const JobList = () => {
             <JobName>{job.name}</JobName>
             <JobPriority>{job.priority}</JobPriority>
             <Icons>
-              <CiEdit  />
+              <CiEdit
+                size={20}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#edit-modal"
+                className="me-2 text-warning"
+                onClick={()=>setEditItem(job)}
+              />
             </Icons>
             <Icons>
               <RiDeleteBin2Line onClick={() => deleteJob(job.id)} />
@@ -172,7 +180,7 @@ const JobList = () => {
           <p>No jobs found</p>
         </div>
       )}
-      <EditIcon/>
+      <EditJob editItem={editItem}/>
     </Container>
   );
 };
