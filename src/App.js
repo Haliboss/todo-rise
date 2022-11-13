@@ -1,8 +1,9 @@
-import {  useState, useReducer } from "react";
-import { Context, initialJobs} from './context/'
+//import {  useState, useReducer } from "react";
+//import { Context, initialJobs} from './context/'
 import CreateJob from "./components/CreateJob";
 import Header from "./components/Header";
 import JobList from "./components/JobList";
+//import JobList from "./components/JobList";
 import JobProvider from "./context/JobProvider";
 
 // function reducer (state, action) {
@@ -18,7 +19,7 @@ import JobProvider from "./context/JobProvider";
 
 function App() {
 
-  const [jobs, setJobs] = useState(initialJobs);
+  //const [jobs, setJobs] = useState(initialJobs);
   // const [state, dispatch] = useReducer(reducer, initialJobs);
 
   // const addJobs = ({ type, payload }) => {

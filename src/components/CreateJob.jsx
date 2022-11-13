@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import { Context } from "../context";
+import { JobContext } from "../context/JobProvider";
+
 
 const Container = styled.div`
   margin: 1rem;
@@ -64,16 +65,20 @@ const CreateJob = () => {
   const [name, setName] = useState("");
   const [priority, setPriority] = useState("");
 
-  const { addJob } = useContext(Context);
+  const { jobs, setJobs } = useContext(JobContext);
 
   const createJob = () => {
     const job = {
+      id: new Date().getTime(),
       name,
       priority,
     };
+    console.log(jobs);
 
-    addJob({ type: "CREATE_JOB", payload: job });
+    setJobs([...jobs, job]);
+    console.log(jobs)
 
+    //addJob({ type: "CREATE_JOB", payload: job });
     setName("");
     setPriority("");
 

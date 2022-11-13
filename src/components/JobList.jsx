@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Context } from "../context";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import { useJobContext } from "../context/JobProvider";
+import EditIcon from './EditJob'
 
 const Container = styled.div`
   //height: 100%;
@@ -20,7 +21,6 @@ const FilterContainer = styled.table`
 `;
 const FormControl = styled.div`
   width: 100%;
-
 `;
 const FormInput = styled.input`
   border-radius: 3px;
@@ -43,7 +43,7 @@ const Label = styled.label`
 `;
 const Icons = styled.td`
   cursor: pointer;
-  
+
   text-align: right;
 `;
 
@@ -79,7 +79,7 @@ const ListLine = styled.tr`
 `;
 
 const JobList = () => {
-  const { jobs, dispatcher } = useContext(Context);
+  const { jobs, setJobs, setLocalStorage } = useJobContext();
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [filterName, setFilterName] = useState("");
   const [filterPriority, setFilterPriority] = useState("");
@@ -103,9 +103,13 @@ const JobList = () => {
     setFilteredJobs(result);
   }, [jobs, filterName, filterPriority]);
 
-  const deleteJob = (index) => {
-    dispatcher({ type: "DELETE_JOB", payload: index });
+  const deleteJob = (id) => {
+    const deletedJobsById = jobs.filter((item) => item.id !== id);
+    setJobs(deletedJobsById);
+    setLocalStorage(deletedJobsById);
   };
+
+  console.log(jobs);
 
   return (
     <Container>
@@ -150,15 +154,15 @@ const JobList = () => {
             <td>Action</td>
           </ListLine>
         </ListHead>
-        {filteredJobs.map((job, index) => (
-          <Job key={index}>
+        {filteredJobs.map((job) => (
+          <Job key={job.id}>
             <JobName>{job.name}</JobName>
             <JobPriority>{job.priority}</JobPriority>
             <Icons>
-              <CiEdit />
+              <CiEdit  />
             </Icons>
             <Icons>
-              <RiDeleteBin2Line onClick={() => deleteJob(index)} />
+              <RiDeleteBin2Line onClick={() => deleteJob(job.id)} />
             </Icons>
           </Job>
         ))}
@@ -168,6 +172,7 @@ const JobList = () => {
           <p>No jobs found</p>
         </div>
       )}
+      <EditIcon/>
     </Container>
   );
 };
