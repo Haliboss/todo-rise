@@ -1,10 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const initialJobs = [
-  { id: 1, name: "Job 1", priority: "urgent" },
-  { id: 2, name: "Job 2", priority: "regular" },
-  { id: 3, name: "Job 3", priority: "trivial" },
-  { id: 4, name: "Job 4", priority: "regular" },
+  { id: 7, name: "Osmn", priority: "trivial" },
+  { id: 9, name: "Tal", priority: "trivial" },
+  { id: 1, name: "Work Hard", priority: "urgent" },
+  { id: 3, name: "Read a Book", priority: "urgent" },
+  { id: 8, name: "Noah", priority: "trivial" },
+  { id: 4, name: "Hasan Ali", priority: "regular" },
+  { id: 2, name: "Study English", priority: "urgent" },
+  { id: 5, name: "Ali", priority: "regular" },
+  { id: 6, name: "Mustafa", priority: "regular" },
 ];
 
 export const JobContext = createContext();

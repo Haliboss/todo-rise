@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { useJobContext } from "../context/JobProvider";
-import EditJob from './EditJob'
+import EditJob from "./EditJob";
 
 const Container = styled.div`
   //height: 100%;
@@ -110,7 +110,36 @@ const JobList = () => {
     setLocalStorage(deletedJobsById);
   };
 
-  console.log(jobs);
+  console.log(filteredJobs);
+
+  const listedJob = () => {
+    const priorities = ["urgent", "regular", "trivial"];
+
+    let mainJobs = [];
+    const sortPrio = () => {
+      priorities.map((item)=>{
+        const urgent = filteredJobs.filter((job) => job.priority === item);
+        let jobNames = [];
+        for (let i = 0; i < urgent.length; i++) {
+          jobNames.push(urgent[i].name);
+        }
+        const sortedJobNames = jobNames.sort();
+        
+        for (let i = 0; i < sortedJobNames.length; i++) {
+          mainJobs.push(
+            urgent.filter((item) => item.name === sortedJobNames[i])
+          );
+          }
+      })
+      console.log(mainJobs);
+
+    };
+    sortPrio()
+    //console.log(sortedJobNames);
+    console.log(mainJobs);
+  };
+
+  listedJob();
 
   return (
     <Container>
@@ -166,7 +195,7 @@ const JobList = () => {
                 data-bs-toggle="modal"
                 data-bs-target="#edit-modal"
                 className="me-2 text-warning"
-                onClick={()=>setEditItem(job)}
+                onClick={() => setEditItem(job)}
               />
             </Icons>
             <Icons>
@@ -180,7 +209,7 @@ const JobList = () => {
           <p>No jobs found</p>
         </div>
       )}
-      <EditJob editItem={editItem}/>
+      <EditJob editItem={editItem} />
     </Container>
   );
 };

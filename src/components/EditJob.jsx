@@ -1,5 +1,6 @@
 //import { useEffect, useState } from "react";
 import { useEffect, useState } from "react";
+import { useJobContext } from "../context/JobProvider";
 //import { useJobContext } from "../context/JobProvider";
 
 const EditJob = ({ editItem }) => {
@@ -14,7 +15,7 @@ const EditJob = ({ editItem }) => {
   console.log(priority)
   //   e.preventDefault();
 
-  //   const { jobs, setJobs } = useJobContext();
+  const { jobs, setJobs } = useJobContext();
 
   //   console.log(e.target.value);
 
@@ -40,7 +41,9 @@ const EditJob = ({ editItem }) => {
       
     });
     console.log(secondNewList);
-    localStorage.setItem("jobs", JSON.stringify(secondNewList));
+    localStorage.setItem("jobs", JSON.stringify
+    (secondNewList));
+    setJobs(secondNewList)
     setModalPriority('')    
   };
 
@@ -87,13 +90,24 @@ const EditJob = ({ editItem }) => {
                   <label htmlFor="desc" className="form-label">
                     Priority
                   </label>
-                  <input
+                  <select
+                    id="priority"
+                    value={modalPriority || ""}
+                    onChange={(e) => setModalPriority(e.target.value)}
+                    placeholder="Select Priority"
+                  >
+                    <option value="">Priority (All)</option>
+                    <option value="urgent">Urgent</option>
+                    <option value="regular">Regular</option>
+                    <option value="trivial">Trivial</option>
+                  </select>
+                  {/* <input
                     type="text"
                     className="form-control"
                     required
                     value={modalPriority || ""}
                     onChange={(e)=>setModalPriority(e.target.value)}
-                  />
+                  /> */}
                 </div>
               </form>
             </div>
