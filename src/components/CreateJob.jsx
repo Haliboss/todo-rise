@@ -4,51 +4,60 @@ import { Context } from "../context";
 
 const Container = styled.div`
   margin: 1rem;
-  display: flex;
-  flex-direction: column;
-  
 `;
-const Title = styled.h1`
-  font-size: 1rem;
+
+const Title = styled.div`
   font-weight: 400;
 `;
 const Button = styled.button`
-  background: rgb(0, 112, 222);
-  color: #fff;
-  border-radius: 3px;
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 1.5rem;
+  background-color: rgb(0, 122, 222);
+  color: white;
   border: none;
-  cursor: pointer;
-  &:hover {
-    background: rgb(0, 92, 182);
+  border-radius: 3px;
+  padding: 5px;
+  //width: 100%;
+
+  @media (min-width: 576px) {
+    width: 120px;
   }
 `;
+
 const Label = styled.label`
-  display: block;
+  font-size: 0.8rem;
   opacity: 0.5;
-  margin-bottom: 0.2rem;
+  display: block;
 `;
-const FormCaontainer = styled.div`
-  margin: 1rem 0;
+
+const FormContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 1px solid red;
-`;
-const FormControl = styled.div`
-  margin: 1rem 0;
-`;
-const FormInput = styled.input`
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  padding: 0.5rem;
+  align-items: center;
+  //border: 2px solid red;
   width: 100%;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
-const Select = styled.select`
-  border-radius: 3px;
+
+const FormControl = styled.div`
+  margin: 0;
+  @media (min-width: 768px) {
+    margin-right: 12px;
+  }
+`;
+
+const FormInput = styled.input`
+  width: 60vw;
   border: 1px solid #ccc;
-  padding: 0.5rem;
+  border-radius: 2px;
+  padding: 0;
+`;
+
+const Select = styled.select`
+  width: 20vw;
+  border-radius: 2px;
+  padding: 2px;
 `;
 
 const CreateJob = () => {
@@ -67,6 +76,16 @@ const CreateJob = () => {
 
     setName("");
     setPriority("");
+
+    if (name.trim().length === 0) {
+      alert("required field");
+      return;
+    }
+
+    if (priority.trim().length === 0) {
+      alert("required field");
+      return;
+    }
   };
 
   const editName = (e) => {
@@ -80,7 +99,7 @@ const CreateJob = () => {
   return (
     <Container>
       <Title>Create New Job</Title>
-      <FormCaontainer>
+      <FormContainer>
         <FormControl>
           <Label htmlFor="name"> Job Name</Label>
           <FormInput
@@ -93,19 +112,23 @@ const CreateJob = () => {
         </FormControl>
         <FormControl>
           <Label htmlFor="priority">Priority</Label>
-          <Select id="priority" value={priority} onChange={editPriority} required>
+          <Select
+            id="priority"
+            value={priority}
+            onChange={editPriority}
+            required
+          >
+            <option value="">Choose</option>
             <option value="urgent">Urgent</option>
             <option value="regular">Regular</option>
             <option value="trivial">Trivial</option>
           </Select>
         </FormControl>
-        <FormControl>
-          <Button onClick={()=> createJob()}>+ Create</Button>  
-        </FormControl>
-      </FormCaontainer>
-    </Container>
 
-  )
+        <Button onClick={() => createJob()}>+ Create</Button>
+      </FormContainer>
+    </Container>
+  );
 };
 
 export default CreateJob;

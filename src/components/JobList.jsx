@@ -1,22 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Context } from "../context";
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBin2Line } from "react-icons/ri";
 
 const Container = styled.div`
-  height: 100%;
+  //height: 100%;
+  margin: 1rem;
 `;
 const Title = styled.h1`
   font-size: 1rem;
 `;
 const FilterContainer = styled.table`
   background-color: #f5f5f5;
-  padding: 1rem;
+  //padding: 1rem;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 `;
 const FormControl = styled.div`
-  margin: 1rem 0;
+  margin: 0;
 `;
 const FormInput = styled.input`
   border-radius: 3px;
@@ -32,21 +35,14 @@ const Select = styled.select`
 const Label = styled.label`
   display: block;
   opacity: 0.5;
-  margin-bottom: 0.2rem;
+  //margin-bottom: 0.2rem;
 `;
-const Button = styled.button`
-  background: rgb(0, 112, 222);
-  color: #fff;
-  border-radius: 3px;
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 1.5rem;
-  border: none;
+const Icons = styled.td`
   cursor: pointer;
-  &:hover {
-    background: rgb(0, 92, 182);
-  }
+  
+  text-align: right;
 `;
+
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,20 +51,26 @@ const Job = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const JobName = styled.div`
+const JobName = styled.td`
   font-size: 1rem;
 `;
-const JobPriority = styled.div`
+const JobPriority = styled.td`
   font-size: 1rem;
+  width: 70px;
 `;
-const DeleteButton = styled.button`
-  background: rgb(0, 112, 222);
-  color: #fff;
-  border-radius: 3px;
-  border: none;
-  cursor: pointer;
-  &:hover {
-    background: rgb(0, 92, 182);
+const ListHead = styled.thead`
+  background-color: #f5f5f5;
+  //padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+`;
+const ListLine = styled.tr`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  td {
+    padding: 0.4rem;
   }
 `;
 
@@ -97,19 +99,19 @@ const JobList = () => {
     setFilteredJobs(result);
   }, [jobs, filterName, filterPriority]);
 
-
   const deleteJob = (index) => {
     dispatcher({ type: "DELETE_JOB", payload: index });
   };
 
-
-
   return (
     <Container>
-      <Title>Job List</Title>
-      <div>
-        ({filteredJobs.length}/{jobs.length})
+      <div className="d-flex justify-content-between">
+        <Title>Job List</Title>
+        <div>
+          ({filteredJobs.length}/{jobs.length})
+        </div>
       </div>
+
       <FilterContainer>
         <FormControl>
           <Label htmlFor="name">Name</Label>
@@ -118,13 +120,17 @@ const JobList = () => {
             id="name"
             value={filterName}
             onChange={editName}
-            disabled
+            searchIcon
           ></FormInput>
         </FormControl>
         <FormControl>
           <Label htmlFor="priority">Priority</Label>
-          <Select id="priority" value={filterPriority} onChange={editPriority}
-          placeholder="Select Priority">
+          <Select
+            id="priority"
+            value={filterPriority}
+            onChange={editPriority}
+            placeholder="Select Priority"
+          >
             <option value="">Priority (All)</option>
             <option value="urgent">Urgent</option>
             <option value="regular">Regular</option>
@@ -133,11 +139,23 @@ const JobList = () => {
         </FormControl>
       </FilterContainer>
       <ListContainer>
+        <ListHead>
+          <ListLine>
+            <td>Name</td>
+            <td>Priority</td>
+            <td>Action</td>
+          </ListLine>
+        </ListHead>
         {filteredJobs.map((job, index) => (
           <Job key={index}>
             <JobName>{job.name}</JobName>
             <JobPriority>{job.priority}</JobPriority>
-            <DeleteButton onClick={() => deleteJob(index)}>Delete</DeleteButton>
+            <Icons>
+              <CiEdit onClick={() => deleteJob(index)} />
+            </Icons>
+            <Icons>
+              <RiDeleteBin2Line onClick={() => deleteJob(index)} />
+            </Icons>
           </Job>
         ))}
       </ListContainer>
@@ -149,6 +167,5 @@ const JobList = () => {
     </Container>
   );
 };
-
 
 export default JobList;
