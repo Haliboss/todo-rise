@@ -76,7 +76,7 @@ const ListLine = styled.div`
   flex-direction: row;
 `;
 
-const Th = styled.th`
+const Th = styled.div`
   padding: 0.4rem;
 `;
 
