@@ -12,7 +12,7 @@ const Container = styled.div`
 const Title = styled.h1`
   font-size: 1rem;
 `;
-const FilterContainer = styled.table`
+const FilterContainer = styled.div`
   background-color: #f5f5f5;
   //padding: 1rem;
   display: flex;
@@ -41,10 +41,10 @@ const Label = styled.label`
   opacity: 0.5;
   //margin-bottom: 0.2rem;
 `;
-const Icons = styled.td`
+const Icons = styled.div`
   cursor: pointer;
-
   text-align: right;
+  
 `;
 
 const ListContainer = styled.div`
@@ -55,27 +55,29 @@ const Job = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const JobName = styled.td`
+const JobName = styled.div`
   font-size: 1rem;
+  width: 30%;
 `;
-const JobPriority = styled.td`
+const JobPriority = styled.div`
   font-size: 1rem;
   width: 70px;
 `;
-const ListHead = styled.thead`
+const ListHead = styled.div`
   background-color: #f5f5f5;
   //padding: 1rem;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 `;
-const ListLine = styled.tr`
+const ListLine = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  td {
-    padding: 0.4rem;
-  }
+`;
+
+const Th = styled.th`
+  padding: 0.4rem;
 `;
 
 const JobList = () => {
@@ -111,32 +113,32 @@ const JobList = () => {
   };
 
   console.log(filteredJobs);
-
+  const data = filteredJobs;
   const listedJob = () => {
     const priorities = ["urgent", "regular", "trivial"];
 
     let mainJobs = [];
     const sortPrio = () => {
-      priorities.map((item)=>{
-        const urgent = filteredJobs.filter((job) => job.priority === item);
+      priorities.map((item) => {
+        const urgent = data.filter((job) => job.priority === item);
         let jobNames = [];
         for (let i = 0; i < urgent.length; i++) {
           jobNames.push(urgent[i].name);
         }
         const sortedJobNames = jobNames.sort();
-        
+
         for (let i = 0; i < sortedJobNames.length; i++) {
           mainJobs.push(
             urgent.filter((item) => item.name === sortedJobNames[i])
           );
-          }
-      })
+        }
+      });
       console.log(mainJobs);
-
     };
-    sortPrio()
+    sortPrio();
     //console.log(sortedJobNames);
     console.log(mainJobs);
+    //setFilteredJobs(mainJobs);
   };
 
   listedJob();
@@ -152,7 +154,7 @@ const JobList = () => {
 
       <FilterContainer>
         <FormControl>
-          <Label htmlFor="name">Name</Label>
+          {/* <Label htmlFor="name">Name</Label> */}
           <FormInput
             type="text"
             id="name"
@@ -162,7 +164,7 @@ const JobList = () => {
           ></FormInput>
         </FormControl>
         <FormControl>
-          <Label htmlFor="priority">Priority</Label>
+          {/* <Label htmlFor="priority">Priority</Label> */}
           <Select
             id="priority"
             value={filterPriority}
@@ -179,9 +181,9 @@ const JobList = () => {
       <ListContainer>
         <ListHead>
           <ListLine>
-            <td>Name</td>
-            <td>Priority</td>
-            <td>Action</td>
+            <Th>Name</Th>
+            <Th>Priority</Th>
+            <Th>Action</Th>
           </ListLine>
         </ListHead>
         {filteredJobs.map((job) => (
@@ -197,8 +199,7 @@ const JobList = () => {
                 className="me-2 text-warning"
                 onClick={() => setEditItem(job)}
               />
-            </Icons>
-            <Icons>
+            
               <RiDeleteBin2Line onClick={() => deleteJob(job.id)} />
             </Icons>
           </Job>

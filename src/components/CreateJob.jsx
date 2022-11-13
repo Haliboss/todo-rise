@@ -15,12 +15,14 @@ const Button = styled.button`
   color: white;
   border: none;
   border-radius: 3px;
-  padding: 5px;
+  padding: 4px;
   //width: 100%;
-
-  @media (min-width: 576px) {
+  //margin-top: 1.3rem;
+    /* @media (max-width: 768px) {
     width: 120px;
-  }
+    font-size: 8px;
+
+  } */
 `;
 
 const Label = styled.label`
@@ -106,7 +108,7 @@ const CreateJob = () => {
       <Title>Create New Job</Title>
       <FormContainer>
         <FormControl>
-          <Label htmlFor="name"> Job Name</Label>
+          {/* <Label htmlFor="name"> Job Name</Label> */}
           <FormInput
             type="text"
             id="name"
@@ -116,7 +118,7 @@ const CreateJob = () => {
           ></FormInput>
         </FormControl>
         <FormControl>
-          <Label htmlFor="priority">Priority</Label>
+          {/* <Label htmlFor="priority">Priority</Label> */}
           <Select
             id="priority"
             value={priority}
