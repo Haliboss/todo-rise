@@ -16,21 +16,25 @@ const FilterContainer = styled.table`
   //padding: 1rem;
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
+  /* flex-direction: row; */
 `;
 const FormControl = styled.div`
-  margin: 0;
+  width: 100%;
+
 `;
 const FormInput = styled.input`
   border-radius: 3px;
   border: 1px solid #ccc;
-  padding: 0.5rem;
-  width: 100%;
+  padding: 0.3rem;
+  width: 70vw;
+  margin: 0.5rem 1rem;
 `;
 const Select = styled.select`
   border-radius: 3px;
   border: 1px solid #ccc;
-  padding: 0.5rem;
+  padding: 0.4rem;
+  width: 20vw;
+  margin-left: 3rem;
 `;
 const Label = styled.label`
   display: block;
@@ -151,7 +155,7 @@ const JobList = () => {
             <JobName>{job.name}</JobName>
             <JobPriority>{job.priority}</JobPriority>
             <Icons>
-              <CiEdit onClick={() => deleteJob(index)} />
+              <CiEdit />
             </Icons>
             <Icons>
               <RiDeleteBin2Line onClick={() => deleteJob(index)} />
