@@ -59,6 +59,7 @@ const Job = styled.div`
   justify-content: space-between;
   align-items: center;
   border: 1px solid #e5e5e5;
+  border-radius: 3px;
   padding: 0.2rem;
   font-weight: 300;
   margin-bottom: 0.2rem;
