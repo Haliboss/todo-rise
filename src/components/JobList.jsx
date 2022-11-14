@@ -4,6 +4,7 @@ import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { useJobContext } from "../context/JobProvider";
 import EditJob from "./EditJob";
+import DeleteJob from "./DeleteIcon";
 
 const Container = styled.div`
   margin: 1rem;
@@ -148,8 +149,6 @@ const JobList = () => {
     setLocalStorage(deletedJobsById);
   };
 
-  //console.log(filteredJobs);
-
   return (
     <Container>
       <div className="d-flex justify-content-between">
@@ -158,10 +157,8 @@ const JobList = () => {
           ({filteredJobs?.length}/{filteredJobs?.length})
         </div>
       </div>
-
       <FilterContainer>
         <FormControl>
-          {/* <Label htmlFor="name">Name</Label> */}
           <FormInput
             id="name"
             value={filterName}
@@ -173,7 +170,6 @@ const JobList = () => {
           ></FormInput>
         </FormControl>
         <FormControl>
-          {/* <Label htmlFor="priority">Priority</Label> */}
           <Select
             id="priority"
             value={filterPriority}
@@ -209,7 +205,14 @@ const JobList = () => {
                 onClick={() => setEditItem(job)}
               />
 
-              <RiDeleteBin2Line onClick={() => deleteJob(job.id)} />
+              <RiDeleteBin2Line
+                size={20}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#delete-modal"
+                className="text-danger"
+                //OnClick={() => deleteJob(job.id)}
+              />
             </Icons>
           </Job>
         ))}
@@ -219,6 +222,7 @@ const JobList = () => {
           <p>No jobs found</p>
         </div>
       )}
+      <DeleteJob editItem={editItem} deleteJob={deleteJob}/>
       <EditJob editItem={editItem} />
     </Container>
   );

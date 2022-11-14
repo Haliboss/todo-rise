@@ -1,37 +1,43 @@
-// import { Modal } from "react-bootstrap";
-// import { useContext, useState } from "react";
-// import { Context } from "../context";
-// import { DeleteIcon } from "../images/delete_icon.png";
+import React from "react";
 
-// const DeleteModal = () => {
-//   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+const DeleteJob = ({editItem, deleteJob}) => {
 
-//   const { deleteJob } = useContext(Context);
+  const { id } = editItem;  
+
+  const handleDelete = () => {
+    deleteJob(id);
+  };
 
 
-//   return (
-//     <Modal
-//       centered
-//       show={deleteModalVisible}
-//       onHide={() => handleDeleteModal()}
-//     >
-//       <Modal.Body className="p-5 text-center">
-//         <WarnIcon width={45} src={WarnSVG} />
+  return (
+    <div id="delete-modal" className="modal fade">
+      <div className="modal-dialog modal-confirm">
+        <div className="modal-content">
+          <div className="modal-header flex-column"></div>
+          <div className="modal-body">
+            <p className="text-center">Are you sure you want to delete it?</p>
+          </div>
+          <div className="modal-footer justify-content-center">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDelete}
+              type="button"
+              className="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-//         <ModalTitle>Are you sure you want to delete it?</ModalTitle>
-
-//         <ButtonWrapper>
-//           <Button
-//             src={DeleteIcon}
-//             buttonType={0}
-//             marginRight
-//             onClick={() => handleDeleteModal()}
-//           />
-//           <Button buttonType={2} onClick={() => deleteJob()} />
-//         </ButtonWrapper>
-//       </Modal.Body>
-//     </Modal>
-//   );
-// };
-
-// export default DeleteModal;
+export default DeleteJob;

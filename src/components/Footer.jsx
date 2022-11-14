@@ -6,7 +6,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(245,245,245);
+  background-color: rgb(245, 245, 245);
   margin: 1rem;
   padding: 0.3rem;
   border-radius: 3px;
@@ -50,7 +50,7 @@ const Dev = styled.div`
     text-decoration: none;
     color: #807e7e;
     @media (max-width: 768px) {
-    font-size: 0.6rem;
+      font-size: 0.6rem;
     }
   }
 `;
