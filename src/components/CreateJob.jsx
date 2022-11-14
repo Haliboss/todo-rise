@@ -16,13 +16,12 @@ const Button = styled.button`
   border: none;
   border-radius: 3px;
   padding: 4px;
-  //width: 100%;
-  //margin-top: 1.3rem;
-    /* @media (max-width: 768px) {
-    width: 120px;
-    font-size: 8px;
-
-  } */
+  margin-top: 1rem;
+  cursor: pointer;
+    @media (max-width: 768px) {
+    width: 90%;
+    margin-top: 1rem;
+  }
 `;
 
 const Label = styled.label`
@@ -35,18 +34,18 @@ const FormContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //border: 2px solid red;
   width: 100%;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
 const FormControl = styled.div`
   margin: 0;
-  @media (min-width: 768px) {
-    margin-right: 12px;
+  @media (max-width: 768px) {
+    width:100%;
   }
 `;
 
@@ -55,12 +54,18 @@ const FormInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 2px;
   padding: 0;
+  @media (max-width: 768px){
+    width: 100%;
+  }
 `;
 
 const Select = styled.select`
   width: 20vw;
   border-radius: 2px;
   padding: 2px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const CreateJob = () => {
@@ -75,12 +80,8 @@ const CreateJob = () => {
       name,
       priority,
     };
-    console.log(jobs);
 
     setJobs([...jobs, job]);
-    console.log(jobs)
-
-    //addJob({ type: "CREATE_JOB", payload: job });
     setName("");
     setPriority("");
 
@@ -108,7 +109,7 @@ const CreateJob = () => {
       <Title>Create New Job</Title>
       <FormContainer>
         <FormControl>
-          {/* <Label htmlFor="name"> Job Name</Label> */}
+          <Label htmlFor="name"> Job Name</Label>
           <FormInput
             type="text"
             id="name"
@@ -118,7 +119,7 @@ const CreateJob = () => {
           ></FormInput>
         </FormControl>
         <FormControl>
-          {/* <Label htmlFor="priority">Priority</Label> */}
+          <Label htmlFor="priority">Priority</Label>
           <Select
             id="priority"
             value={priority}

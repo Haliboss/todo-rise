@@ -5,7 +5,12 @@ import img from '../images/image002.png'
 const Container = styled.div`
   background: #fff;
   margin: 1rem;
-  `
+  img {
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+  }
+`;
 
 const Header = () => {
   return (

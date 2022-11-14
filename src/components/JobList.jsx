@@ -6,18 +6,20 @@ import { useJobContext } from "../context/JobProvider";
 import EditJob from "./EditJob";
 
 const Container = styled.div`
-  //height: 100%;
   margin: 1rem;
 `;
 const Title = styled.h1`
   font-size: 1rem;
 `;
 const FilterContainer = styled.div`
-  background-color: #f5f5f5;
-  //padding: 1rem;
+  background-color: rgb(241,244,255);
   display: flex;
   justify-content: space-between;
-  /* flex-direction: row; */
+  margin-bottom: 0.2rem;
+  border: 1px solid #e5e5e5;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 const FormControl = styled.div`
   width: 100%;
@@ -28,23 +30,24 @@ const FormInput = styled.input`
   padding: 0.3rem;
   width: 70vw;
   margin: 0.5rem 1rem;
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 const Select = styled.select`
   border-radius: 3px;
   border: 1px solid #ccc;
   padding: 0.4rem;
   width: 20vw;
-  margin-left: 3rem;
+  margin: 0.5rem 1rem;
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
-const Label = styled.label`
-  display: block;
-  opacity: 0.5;
-  //margin-bottom: 0.2rem;
-`;
+
 const Icons = styled.div`
   cursor: pointer;
   text-align: right;
-  
 `;
 
 const ListContainer = styled.div`
@@ -54,6 +57,11 @@ const ListContainer = styled.div`
 const Job = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e5e5e5;
+  padding: 0.2rem;
+  font-weight: 300;
+  margin-bottom: 0.2rem;
 `;
 const JobName = styled.div`
   font-size: 1rem;
@@ -61,21 +69,21 @@ const JobName = styled.div`
 `;
 const JobPriority = styled.div`
   font-size: 1rem;
-  width: 70px;
+  width: 30%;
 `;
 const ListHead = styled.div`
-  background-color: #f5f5f5;
-  //padding: 1rem;
+  background-color: rgb(228,234,253);
+  border: 1px solid #e5e5e5;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  margin-bottom: 0.2rem;
 `;
 const ListLine = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
 `;
-
 const Th = styled.div`
   padding: 0.4rem;
 `;
@@ -103,7 +111,34 @@ const JobList = () => {
     if (filterPriority) {
       result = result.filter((job) => job.priority.includes(filterPriority));
     }
-    setFilteredJobs(result);
+
+    const listedJob = () => {
+      const priorities = ["urgent", "regular", "trivial"];
+
+      let mainJobs = [];
+      const sortPrio = () => {
+        priorities.map((item) => {
+          const urgent = result?.filter((job) => job.priority === item);
+          let jobNames = [];
+          for (let i = 0; i < urgent.length; i++) {
+            jobNames.push(urgent[i].name);
+          }
+          const sortedJobNames = jobNames.sort();
+
+          for (let i = 0; i < sortedJobNames.length; i++) {
+            mainJobs.push(
+              ...urgent.filter((item) => item.name === sortedJobNames[i])
+            );
+          }
+          return mainJobs;
+        });
+        //console.log(mainJobs);
+      };
+      sortPrio();
+
+      setFilteredJobs(mainJobs);
+    };
+    listedJob();
   }, [jobs, filterName, filterPriority]);
 
   const deleteJob = (id) => {
@@ -112,43 +147,14 @@ const JobList = () => {
     setLocalStorage(deletedJobsById);
   };
 
-  console.log(filteredJobs);
-  const data = filteredJobs;
-  const listedJob = () => {
-    const priorities = ["urgent", "regular", "trivial"];
-
-    let mainJobs = [];
-    const sortPrio = () => {
-      priorities.map((item) => {
-        const urgent = data.filter((job) => job.priority === item);
-        let jobNames = [];
-        for (let i = 0; i < urgent.length; i++) {
-          jobNames.push(urgent[i].name);
-        }
-        const sortedJobNames = jobNames.sort();
-
-        for (let i = 0; i < sortedJobNames.length; i++) {
-          mainJobs.push(
-            urgent.filter((item) => item.name === sortedJobNames[i])
-          );
-        }
-      });
-      console.log(mainJobs);
-    };
-    sortPrio();
-    //console.log(sortedJobNames);
-    console.log(mainJobs);
-    //setFilteredJobs(mainJobs);
-  };
-
-  listedJob();
+  //console.log(filteredJobs);
 
   return (
     <Container>
       <div className="d-flex justify-content-between">
         <Title>Job List</Title>
         <div>
-          ({filteredJobs.length}/{jobs.length})
+          ({filteredJobs?.length}/{filteredJobs?.length})
         </div>
       </div>
 
@@ -156,11 +162,13 @@ const JobList = () => {
         <FormControl>
           {/* <Label htmlFor="name">Name</Label> */}
           <FormInput
-            type="text"
             id="name"
             value={filterName}
             onChange={editName}
             searchIcon
+            className="form-control"
+            type="text"
+            placeholder="Search by name"
           ></FormInput>
         </FormControl>
         <FormControl>
@@ -186,10 +194,10 @@ const JobList = () => {
             <Th>Action</Th>
           </ListLine>
         </ListHead>
-        {filteredJobs.map((job) => (
-          <Job key={job.id}>
-            <JobName>{job.name}</JobName>
-            <JobPriority>{job.priority}</JobPriority>
+        {filteredJobs?.map((job, key) => (
+          <Job key={key}>
+            <JobName>{job?.name}</JobName>
+            <JobPriority>{job?.priority}</JobPriority>
             <Icons>
               <CiEdit
                 size={20}
@@ -199,7 +207,7 @@ const JobList = () => {
                 className="me-2 text-warning"
                 onClick={() => setEditItem(job)}
               />
-            
+
               <RiDeleteBin2Line onClick={() => deleteJob(job.id)} />
             </Icons>
           </Job>

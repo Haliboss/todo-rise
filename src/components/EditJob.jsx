@@ -1,39 +1,26 @@
-//import { useEffect, useState } from "react";
 import { useEffect, useState } from "react";
 import { useJobContext } from "../context/JobProvider";
-//import { useJobContext } from "../context/JobProvider";
+
 
 const EditJob = ({ editItem }) => {
-  console.log(editItem);
 
-  const { id, name, priority } = editItem;
-
-  //const { getLocalJobs } = useJobContext();
+  const { id, name, priority } = editItem; 
 
   const [modalPriority, setModalPriority] = useState(priority);
 
-  console.log(priority)
-  //   e.preventDefault();
-
   const { jobs, setJobs } = useJobContext();
-
-  //   console.log(e.target.value);
 
   useEffect(() => {
     setModalPriority(priority);
   }, [priority]);
 
-  //   // //! Update (PUT:Whole Update,PATCH :Partially Update)
   const editJob = (id) => {
-    const newList = JSON.parse(localStorage.getItem("jobs"));
-    console.log(newList);
-    // for (let i = 0; i < newList.lenght; i++) {
 
-    // }
+    const newList = JSON.parse(localStorage.getItem("jobs"));
+
     const secondNewList = newList.map((job) => {
-      console.log(typeof id)
-      console.log(typeof job.id);
-      if (String(job.id) === String(id)) {
+  
+      if (job.id === id) {
         return { ...job, priority: modalPriority };
       } else {
         return job
@@ -41,17 +28,18 @@ const EditJob = ({ editItem }) => {
       
     });
     console.log(secondNewList);
+
     localStorage.setItem("jobs", JSON.stringify
     (secondNewList));
     setJobs(secondNewList)
     setModalPriority('')    
   };
 
+  console.log(jobs);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     editJob(id, name, priority);
-    //setTitle("");
-    //setDescription("");
   };
 
   return (
@@ -83,18 +71,18 @@ const EditJob = ({ editItem }) => {
                     placeholder="Enter your title"
                     required
                     value={name || ""}
-                    disabled
+                    disabled //!
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="desc" className="form-label">
+                  <label htmlFor="pri" className="form-label">
                     Priority
                   </label>
                   <select
                     id="priority"
                     value={modalPriority || ""}
                     onChange={(e) => setModalPriority(e.target.value)}
-                    placeholder="Select Priority"
+                    className="form-select"
                   >
                     <option value="">Priority (All)</option>
                     <option value="urgent">Urgent</option>
