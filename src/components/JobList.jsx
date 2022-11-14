@@ -13,7 +13,7 @@ const Title = styled.h1`
   font-size: 1rem;
 `;
 const FilterContainer = styled.div`
-  background-color: rgb(241,244,255);
+  background-color: rgb(241, 244, 255);
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.2rem;
@@ -74,7 +74,7 @@ const JobPriority = styled.div`
   width: 30%;
 `;
 const ListHead = styled.div`
-  background-color: rgb(228,234,253);
+  background-color: rgb(228, 234, 253);
   border: 1px solid #e5e5e5;
   display: flex;
   justify-content: space-between;
@@ -115,7 +115,7 @@ const JobList = () => {
       result = result.filter((job) => job.priority.includes(filterPriority));
     }
 
-    //! List Jobs - Name and Priority 
+    //! List Jobs - Name(A-Z) and Priority
     const listedJob = () => {
       const priorities = ["urgent", "regular", "trivial"];
 
@@ -207,14 +207,13 @@ const JobList = () => {
                 className="me-2 text-warning"
                 onClick={() => setEditItem(job)}
               />
-
               <RiDeleteBin2Line
                 size={20}
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#delete-modal"
                 className="text-danger"
-                //OnClick={() => deleteJob(job.id)}
+                onClick={() => setEditItem(job)}
               />
             </Icons>
           </Job>
@@ -225,8 +224,8 @@ const JobList = () => {
           <p>No jobs found</p>
         </div>
       )}
-      <DeleteJob editItem={editItem} deleteJob={deleteJob}/>
       <EditJob editItem={editItem} />
+      <DeleteJob editItem={editItem} deleteJob={deleteJob} />
     </Container>
   );
 };

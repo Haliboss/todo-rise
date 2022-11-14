@@ -74,7 +74,7 @@ const CreateJob = () => {
 
   const [priority, setPriority] = useState("");
 
-  const { jobs, setJobs } = useContext(JobContext);
+  const { jobs, setJobs, setLocalStorage } = useContext(JobContext);
 
   //! CRUD Operations - Create
   const createJob = () => {
@@ -97,6 +97,7 @@ const CreateJob = () => {
       alert("required field");
       return;
     }
+    setLocalStorage([...jobs, job]);
   };
 
   const editName = (e) => {

@@ -1,13 +1,12 @@
 import React from "react";
 
-const DeleteJob = ({editItem, deleteJob}) => {
-
-  const { id } = editItem;  
+const DeleteJob =  ({editItem, deleteJob}) => {
+  
+  const {id} = editItem;
 
   const handleDelete = () => {
     deleteJob(id);
   };
-
 
   return (
     <div id="delete-modal" className="modal fade">
@@ -30,6 +29,7 @@ const DeleteJob = ({editItem, deleteJob}) => {
               type="button"
               className="btn btn-danger"
               data-bs-dismiss="modal"
+              
             >
               Delete
             </button>
