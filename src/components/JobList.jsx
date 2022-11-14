@@ -105,6 +105,7 @@ const JobList = () => {
     setFilterPriority(e.target.value);
   };
 
+  //! Filter Jobs - Name and Priority
   useEffect(() => {
     let result = [...jobs];
     if (filterName) {
@@ -114,6 +115,7 @@ const JobList = () => {
       result = result.filter((job) => job.priority.includes(filterPriority));
     }
 
+    //! List Jobs - Name and Priority 
     const listedJob = () => {
       const priorities = ["urgent", "regular", "trivial"];
 
@@ -143,6 +145,7 @@ const JobList = () => {
     listedJob();
   }, [jobs, filterName, filterPriority]);
 
+  //! CRUD operations - Delete
   const deleteJob = (id) => {
     const deletedJobsById = jobs.filter((item) => item.id !== id);
     setJobs(deletedJobsById);
@@ -174,7 +177,7 @@ const JobList = () => {
             id="priority"
             value={filterPriority}
             onChange={editPriority}
-            placeholder="Select Priority"
+            role="button"
           >
             <option value="">Priority (All)</option>
             <option value="urgent">Urgent</option>

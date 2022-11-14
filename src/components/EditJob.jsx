@@ -14,6 +14,7 @@ const EditJob = ({ editItem }) => {
     setModalPriority(priority);
   }, [priority]);
 
+  //! CRUD operations - Update
   const editJob = (id) => {
 
     const newList = JSON.parse(localStorage.getItem("jobs"));
@@ -83,6 +84,7 @@ const EditJob = ({ editItem }) => {
                     value={modalPriority || ""}
                     onChange={(e) => setModalPriority(e.target.value)}
                     className="form-select"
+
                   >
                     <option value="">Priority (All)</option>
                     <option value="urgent">Urgent</option>

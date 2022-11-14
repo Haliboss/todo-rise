@@ -1,15 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const initialJobs = [
-  { id: 7, name: "Osmn", priority: "trivial" },
-  { id: 9, name: "Tal", priority: "trivial" },
-  { id: 1, name: "Work Hard", priority: "urgent" },
-  { id: 3, name: "Read a Book", priority: "urgent" },
-  { id: 8, name: "Noah", priority: "trivial" },
-  { id: 4, name: "Hasan Ali", priority: "regular" },
-  { id: 2, name: "Study English", priority: "urgent" },
-  { id: 5, name: "Ali", priority: "regular" },
-  { id: 6, name: "Mustafa", priority: "regular" },
+  { id: 1, name: "work hard", priority: "urgent" },
+  { id: 2, name: "find a new job", priority: "urgent" },
+  { id: 3, name: "read a book", priority: "regular" },
+  { id: 4, name: "i have to dance", priority: "trivial" },
+  { id: 5, name: "save humanity", priority: "trivial" },
 ];
 
 export const JobContext = createContext();
@@ -26,12 +22,13 @@ const JobProvider = ({ children }) => {
     return JSON.parse(localStorage.getItem("jobs"));
   };
   
+  //! CRUD operations - Read
   useEffect(() => {
     const getLocalJobs = getLocalStorage();
     getLocalJobs?.length || setLocalStorage(initialJobs);
     setJobs(getLocalStorage());
   }, []);
-  //console.log(jobs);  
+  console.log(jobs);  
   
   const values = { jobs, setJobs, getLocalStorage, setLocalStorage };
 

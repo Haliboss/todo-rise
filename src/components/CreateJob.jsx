@@ -69,11 +69,14 @@ const Select = styled.select`
 `;
 
 const CreateJob = () => {
+
   const [name, setName] = useState("");
+
   const [priority, setPriority] = useState("");
 
   const { jobs, setJobs } = useContext(JobContext);
 
+  //! CRUD Operations - Create
   const createJob = () => {
     const job = {
       id: new Date().getTime(),
@@ -132,7 +135,6 @@ const CreateJob = () => {
             <option value="trivial">Trivial</option>
           </Select>
         </FormControl>
-
         <Button onClick={() => createJob()}>+ Create</Button>
       </FormContainer>
     </Container>

@@ -3,6 +3,11 @@ import styled from "styled-components";
 import img from "../images/image001.png";
 
 const Container = styled.div`
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
