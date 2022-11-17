@@ -72,6 +72,21 @@ const JobName = styled.div`
 const JobPriority = styled.div`
   font-size: 1rem;
   width: 30%;
+  background-color: ${({priorityType}) => {
+    if (priorityType === "urgent") {
+      return "red";
+    } else if (priorityType === "regular") {
+      return "yellow";
+    } else if (priorityType === "trivial") {
+      return "green";
+    } else {
+      return "blue";
+    }
+  }
+  };
+
+  padding: 1rem;
+
 `;
 const ListHead = styled.div`
   background-color: rgb(228, 234, 253);
@@ -120,15 +135,17 @@ const JobList = () => {
       const priorities = ["urgent", "regular", "trivial"];
 
       let mainJobs = [];
+
       const sortPrio = () => {
+
         priorities.map((item) => {
           const urgent = result?.filter((job) => job.priority === item);
           let jobNames = [];
           for (let i = 0; i < urgent.length; i++) {
             jobNames.push(urgent[i].name);
           }
-          const sortedJobNames = jobNames.sort();
 
+          const sortedJobNames = jobNames.sort();
           for (let i = 0; i < sortedJobNames.length; i++) {
             mainJobs.push(
               ...urgent.filter((item) => item.name === sortedJobNames[i])
@@ -197,7 +214,7 @@ const JobList = () => {
         {filteredJobs?.map((job, key) => (
           <Job key={key}>
             <JobName>{job?.name}</JobName>
-            <JobPriority>{job?.priority}</JobPriority>
+            <JobPriority priorityType={job.priority}>{job?.priority}</JobPriority>
             <Icons>
               <CiEdit
                 size={20}
